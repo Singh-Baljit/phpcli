@@ -124,7 +124,7 @@ class PHPCli{
                     $lastName   = mb_convert_case(trim($this->dbCli->real_escape_string($csvData[1])), MB_CASE_TITLE);
                     $email      = strtolower(trim($this->dbCli->real_escape_string($csvData[2])));
                     
-                    if( ! isset($this->cliOptions['dry_run']) ):
+                    if( isset($this->cliOptions['dry_run']) === FALSE ):
 
                         $dbInsert = "INSERT INTO $this->DATABASE.users (first_name, last_name, email) VALUES ('$firstName', '$lastName', '$email');";
                         if ( $this->dbCli->query($dbInsert) === FALSE ):
@@ -202,6 +202,10 @@ try {
     
         $dbConnectionStatus = $cliObj->db_connection( $cliOptions['h'], $cliOptions['u'], $cliOptions['p'] );
 
+    else:
+
+        throw new Exception( 'Database Connection Error: Too few arugments.' );
+
     endif;
 
     if( isset($dbConnectionStatus) && $dbConnectionStatus === TRUE):
@@ -218,7 +222,7 @@ try {
             // Display intersion error
             if( isset($csvErrors[0]) and $csvErrors !== '' ):
 
-                echo 'Records errors:' . PHP_EOL;
+                echo 'Database errors:' . PHP_EOL;
                 echo $csvErrors[0];
 
             endif;
