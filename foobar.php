@@ -2,7 +2,8 @@
 (PHP_SAPI !== 'cli' || isset($_SERVER['REMOTE_ADDR'])) && die('This is command line only script. Thanks.');
 
 /** .
-* PHP script Foobar
+* PHP script
+* Logic Test
 * 
 *
 * Script runs only on cli
@@ -10,9 +11,9 @@
 class Foobar{
 
     /**
-     * Foobar logic
+     * Foobar logic test
      */
-    public function logic_test()
+    public function logic_test(): string
     {
         $output = '';
         for( $numbers = 1; $numbers <= 100; $numbers ++ ):
@@ -29,7 +30,7 @@ class Foobar{
             
         endfor;
 
-        echo $output;
+        return $output;
         
     }
 
@@ -43,10 +44,14 @@ try {
     // Class object
     $foobarObj = new Foobar();
 
-    $foobarObj->logic_test();
+    $output = $foobarObj->logic_test();
+    print 'Foobar Output:' . PHP_EOL;
+    print $output;
 
 } catch ( Exception $e ) {
 
     echo 'Caught exception: ',  $e->getMessage(), '\n';
 
 }
+
+?>
